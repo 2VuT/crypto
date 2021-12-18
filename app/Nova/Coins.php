@@ -48,9 +48,9 @@ class Coins extends Resource
 
             Text::make('Tên', 'name'),
 
-            Number::make('Trung Bình Giá', 'average_price')->nullable(),
+            Number::make('Trung Bình Giá', 'average_price')->nullable()->step(0.0000000001),
 
-            Number::make('Số Lượng', 'quantity')->nullable(),
+            Number::make('Số Lượng', 'quantity')->nullable()->step(0.1),
         ];
     }
 

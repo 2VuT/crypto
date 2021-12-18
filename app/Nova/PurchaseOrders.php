@@ -43,9 +43,9 @@ class PurchaseOrders extends Resource
         return [
             ID::make(__('ID'), 'id')->sortable(),
             Number::make(__('Coin ID'), 'coin_id'),
-            Number::make(__('Tiền Mua'), 'buy_money'),
-            ID::make(__('Giá Mua'), 'buy_price'),
-            ID::make(__('Số Lượng'), 'buy_quantity'),
+            Number::make(__('Tiền Mua'), 'buy_money')->step(0.01),
+            Number::make(__('Giá Mua'), 'buy_price')->step(0.00000000001),
+            Number::make(__('Số Lượng'), 'quantity')->step(0.01),
         ];
     }
 
