@@ -3,18 +3,20 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class SellOrders extends Resource
+class PurchaseOrder extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\SellOrders::class;
+    public static $model = \App\Models\PurchaseOrder::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -42,14 +44,12 @@ class SellOrders extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-
-            Number::make(__('Giá Bán'), 'sell_price')->nullable()->step(0.00000000001),
-
-            Number::make(__('Số Lượng Bán'), 'sell_quantity')->nullable()->step(0.01),
-
-            Number::make(__('Tiền Bán'), 'sell_money')->nullable()->step(0.01),
-            
-            Number::make(__('Lợi Nhuận / Cắt Lỗ'), 'stl_profit')->nullable()->step(0.01),
+            BelongsTo::make('Coin')->display(function ($coin) { return $coin->code; }),
+            BelongsTo::make('User')->display(function ($user) { return $user->name; }),
+            Number::make(__('Tiền Mua'), 'buy_money')->step(0.01),
+            Number::make(__('Giá Mua'), 'buy_price')->step(0.00000000001),
+            Number::make(__('Số Lượng'), 'quantity')->step(0.01),
+            Date::make('Created At'),
         ];
     }
 

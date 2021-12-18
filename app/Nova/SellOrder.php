@@ -3,18 +3,19 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class PurchaseOrders extends Resource
+class SellOrder extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\PurchaseOrders::class;
+    public static $model = \App\Models\SellOrder::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -42,10 +43,12 @@ class PurchaseOrders extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Number::make(__('Coin ID'), 'coin_id'),
-            Number::make(__('Tiền Mua'), 'buy_money')->step(0.01),
-            Number::make(__('Giá Mua'), 'buy_price')->step(0.00000000001),
-            Number::make(__('Số Lượng'), 'quantity')->step(0.01),
+            BelongsTo::make('Coin')->display(function ($coin) { return $coin->name; }),
+            BelongsTo::make('User')->display(function ($user) { return $user->name; }),
+            Number::make(__('Giá Bán'), 'sell_price')->nullable()->step(0.00000000001),
+            Number::make(__('Số Lượng Bán'), 'sell_quantity')->nullable()->step(0.01),
+            Number::make(__('Tiền Bán'), 'sell_money')->nullable()->step(0.01),
+            Number::make(__('Lợi Nhuận / Cắt Lỗ'), 'stl_profit')->nullable()->step(0.01),
         ];
     }
 

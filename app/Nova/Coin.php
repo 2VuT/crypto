@@ -3,19 +3,22 @@
 namespace App\Nova;
 
 use Illuminate\Http\Request;
+use Laravel\Nova\Fields\BelongsTo;
+use Laravel\Nova\Fields\BelongsToMany;
+use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class Coins extends Resource
+class Coin extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\Coins::class;
+    public static $model = \App\Models\Coin::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -43,14 +46,12 @@ class Coins extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-
             Text::make('Mã', 'code'),
-
             Text::make('Tên', 'name'),
-
             Number::make('Trung Bình Giá', 'average_price')->nullable()->step(0.0000000001),
-
             Number::make('Số Lượng', 'quantity')->nullable()->step(0.1),
+            BelongsTo::make('User'),
+            HasMany::make('PurchaseOrder'),
         ];
     }
 
