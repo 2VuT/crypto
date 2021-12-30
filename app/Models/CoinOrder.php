@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class PurchaseOrder extends Model
+class CoinOrder extends Model
 {
     use HasFactory;
 
@@ -17,10 +17,5 @@ class PurchaseOrder extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function coinOrder()
-    {
-        return $this->belongsTo(CoinOrder::class);
     }
 }

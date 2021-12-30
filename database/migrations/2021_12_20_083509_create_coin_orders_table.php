@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddUserIdColumnToCoinsTable extends Migration
+class CreateCoinOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,13 @@ class AddUserIdColumnToCoinsTable extends Migration
      */
     public function up()
     {
-        Schema::table('coins', function (Blueprint $table) {
+        Schema::create('coin_orders', function (Blueprint $table) {
+            $table->id();
+            $table->integer('coin_id');
             $table->integer('user_id');
+            $table->decimal('average_price', 20,10)->nullable();
+            $table->decimal('quantity', 20, 10)->nullable();
+            $table->timestamps();
         });
     }
 
@@ -25,8 +30,6 @@ class AddUserIdColumnToCoinsTable extends Migration
      */
     public function down()
     {
-        Schema::table('coins', function (Blueprint $table) {
-            $table->dropColumn('user_id');
-        });
+        Schema::dropIfExists('coin_orders');
     }
 }

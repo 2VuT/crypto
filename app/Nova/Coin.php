@@ -46,12 +46,12 @@ class Coin extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            Text::make('Mã', 'code'),
+            Text::make('Mã', 'code')
+                ->rules('required', 'max:10')
+                ->creationRules('unique:coins,code'),
             Text::make('Tên', 'name'),
-            Number::make('Trung Bình Giá', 'average_price')->nullable()->step(0.0000000001),
-            Number::make('Số Lượng', 'quantity')->nullable()->step(0.1),
-            BelongsTo::make('User'),
             HasMany::make('PurchaseOrder'),
+            HasMany::make('SellOrder'),
         ];
     }
 

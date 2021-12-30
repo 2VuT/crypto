@@ -17,8 +17,6 @@ class CreateCoinsTable extends Migration
             $table->id();
             $table->string('code');
             $table->string('name');
-            $table->decimal('average_price', 20,15)->nullable();
-            $table->decimal('quantity', 10,2)->nullable();
             $table->timestamps();
         });
     }

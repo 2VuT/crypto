@@ -4,19 +4,18 @@ namespace App\Nova;
 
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
-use Laravel\Nova\Fields\Date;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Number;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
-class PurchaseOrder extends Resource
+class CoinOrder extends Resource
 {
     /**
      * The model the resource corresponds to.
      *
      * @var string
      */
-    public static $model = \App\Models\PurchaseOrder::class;
+    public static $model = \App\Models\CoinOrder::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -31,7 +30,7 @@ class PurchaseOrder extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'coin_id',
+        'id',
     ];
 
     /**
@@ -44,13 +43,10 @@ class PurchaseOrder extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            BelongsTo::make('Coin')->display(function ($coin) { return $coin->code; }),
-            BelongsTo::make('User')->display(function ($user) { return $user->name; }),
-            BelongsTo::make('CoinOrder')->display(function ($coinOrder) { return $coinOrder->coin_id; }),
-            Number::make(__('Tiền Mua'), 'buy_money')->step(0.01),
-            Number::make(__('Giá Mua'), 'buy_price')->step(0.00000000001),
+            BelongsTo::make(__('Coins'), 'Coin')->display(function ($coin) { return $coin->code; }),
+            BelongsTo::make(__('Users'), 'User')->display(function ($user) { return $user->name; }),
+            Number::make(__('Trung Bình Giá'), 'average_price')->step(0.00000000001),
             Number::make(__('Số Lượng'), 'quantity')->step(0.01),
-            Date::make('Created At'),
         ];
     }
 
@@ -78,7 +74,7 @@ class PurchaseOrder extends Resource
 
     /**
      * Get the lenses available for the resource.
-     *œ
+     *
      * @param  \Illuminate\Http\Request  $request
      * @return array
      */
