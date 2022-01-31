@@ -9,13 +9,8 @@ class SellOrder extends Model
 {
     use HasFactory;
 
-    public function coin()
+    public function coinOrder()
     {
-        return $this->belongsTo(Coin::class);
-    }
-
-    public function user()
-    {
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(CoinOrder::class);
     }
 }

@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Models\Coin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
@@ -43,8 +45,13 @@ class SellOrder extends Resource
     {
         return [
             ID::make(__('ID'), 'id')->sortable(),
-            BelongsTo::make('Coin')->display(function ($coin) { return $coin->name; }),
-            BelongsTo::make('User')->display(function ($user) { return $user->name; }),
+            BelongsTo::make('CoinOrder')->display(function ($coinOrder)
+            {
+                $coin = Coin::find($coinOrder->coin_id);
+                $user = User::find($coinOrder->user_id);
+
+                return $coin->name . ' - ' . $user->name;
+            }),
             Number::make(__('Giá Bán'), 'sell_price')->nullable()->step(0.00000000001),
             Number::make(__('Số Lượng Bán'), 'sell_quantity')->nullable()->step(0.01),
             Number::make(__('Tiền Bán'), 'sell_money')->nullable()->step(0.01),
