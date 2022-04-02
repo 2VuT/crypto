@@ -3,6 +3,7 @@
 namespace App\Nova;
 
 use App\Models\Coin;
+use App\Models\CoinOrder;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
@@ -24,7 +25,21 @@ class PurchaseOrder extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'coin_order_id';
+
+    public function title()
+    {
+        $coinOrder = CoinOrder::find($this->coin_order_id);
+
+        if ($coinOrder) {
+            $coin = Coin::find($coinOrder->coin_id);
+            $user = User::find($coinOrder->user_id);
+
+            return $user->name .'-'. $coin->code;
+        }
+
+        return '';
+    }
 
     /**
      * The columns that should be searched.
@@ -32,7 +47,7 @@ class PurchaseOrder extends Resource
      * @var array
      */
     public static $search = [
-        'id', 'coin_id',
+        'id', 'coin_order_id',
     ];
 
     /**
@@ -50,10 +65,10 @@ class PurchaseOrder extends Resource
                 $coin = Coin::find($coinOrder->coin_id);
                 $user = User::find($coinOrder->user_id);
 
-                return $coin->name . ' - ' . $user->name;
+                return $coin->code . ' - ' . $user->name;
             }),
             Number::make(__('Tiền Mua'), 'buy_money')->step(0.01),
-            Number::make(__('Giá Mua'), 'buy_price')->step(0.00000000001),
+            Number::make(__('Giá Mua'), 'buy_price')->step(0.01),
             Number::make(__('Số Lượng'), 'quantity')->step(0.01),
             Date::make('Created At'),
         ];

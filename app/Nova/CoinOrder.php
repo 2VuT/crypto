@@ -22,7 +22,7 @@ class CoinOrder extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'coin_id';
 
     /**
      * The columns that should be searched.

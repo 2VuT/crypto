@@ -24,7 +24,7 @@ class SellOrder extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'coin_order_id';
 
     /**
      * The columns that should be searched.

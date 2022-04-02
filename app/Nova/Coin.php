@@ -25,7 +25,7 @@ class Coin extends Resource
      *
      * @var string
      */
-    public static $title = 'id';
+    public static $title = 'code';
 
     /**
      * The columns that should be searched.
@@ -49,7 +49,6 @@ class Coin extends Resource
             Text::make('Mã', 'code')
                 ->rules('required', 'max:10')
                 ->creationRules('unique:coins,code'),
-            Text::make('Tên', 'name'),
             HasMany::make('PurchaseOrder'),
             HasMany::make('SellOrder'),
         ];
