@@ -27,6 +27,11 @@ class Coin extends Resource
      */
     public static $title = 'code';
 
+    public function title()
+    {
+        return $this->code;
+    }
+
     /**
      * The columns that should be searched.
      *

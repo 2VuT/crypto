@@ -52,7 +52,7 @@ class SellOrder extends Resource
 
                 return $coin->name . ' - ' . $user->name;
             }),
-            Number::make(__('Giá Bán'), 'sell_price')->nullable()->step(0.00000000001),
+            Number::make(__('Giá Bán'), 'sell_price')->nullable()->step(0.01),
             Number::make(__('Số Lượng Bán'), 'sell_quantity')->nullable()->step(0.01),
             Number::make(__('Tiền Bán'), 'sell_money')->nullable()->step(0.01),
             Number::make(__('Lợi Nhuận / Cắt Lỗ'), 'stl_profit')->nullable()->step(0.01),

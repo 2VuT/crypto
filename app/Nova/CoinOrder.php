@@ -2,6 +2,8 @@
 
 namespace App\Nova;
 
+use App\Models\Coin;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\BelongsTo;
 use Laravel\Nova\Fields\ID;
@@ -23,6 +25,14 @@ class CoinOrder extends Resource
      * @var string
      */
     public static $title = 'coin_id';
+
+    public function title()
+    {
+        $coin = Coin::find($this->coin_id);
+        $user = User::find($this->user_id);
+
+         return $coin->code.' - '.$user->name;
+    }
 
     /**
      * The columns that should be searched.
